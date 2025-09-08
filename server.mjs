@@ -68,8 +68,21 @@ app.delete("/api/games/:id", (req, res) => {
     res.status(204).send();
 })
 
+// Middleware
+// Global Error
 app.use(function(err, req, res, next){
     res.status(500).send(err.message);
+})
+
+// Logger
+app.use((req, res) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+})
+
+// Not Found Handler
+app.use((req, res) => {
+    res.status(404).send("Route not Found");
 })
 
 app.listen(PORT, () => {
