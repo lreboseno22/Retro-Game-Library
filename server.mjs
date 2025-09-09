@@ -72,6 +72,13 @@ app.get("/api/games/:id", (req, res) => {
     res.json(game);
 })
 
+// GET a single game by ID and render the editGame template
+app.get("/edit-game/:id", (req, res) => {
+    const game = games.find(g => g.id == req.params.id);
+    if(!game) return res.status(404).send("Game not Found");
+    res.render("editGame", { game });
+})
+
 // PUT (update) a game
 app.put("/api/games/:id", (req, res) => {
     const game = games.find(g => g.id == req.params.id);
@@ -83,7 +90,7 @@ app.put("/api/games/:id", (req, res) => {
     game.platform = platform ?? game.platform;
     game.year = year ?? game.year;
 
-    res.json(game);
+    res.redirect("/library");
 })
 
 // DELETE a game by id
