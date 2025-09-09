@@ -1,5 +1,6 @@
 import express from "express";
 import mustacheExpress from "mustache-express";
+import methodOverride from "method-override";
 
 const app = express();
 const PORT = 3000;
@@ -7,17 +8,25 @@ const PORT = 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// TESTING DELETE WITH THE MUSTACHE TEMPLATE
+app.use(methodOverride("_method"));
+
+app.use(methodOverride((req, res) => {
+    if(req.body && typeof req.body === "object" && "_method" in req.body){
+        return req.body._method;
+    }
+}));
+
+// DEBUGGER AND LOGGER
+app.use((req, res, next) => {
+  console.log("DEBUG:", req.method, req.url, req.body);
+  next();
+});
 
 // Mustache setup
 app.engine("mustache", mustacheExpress());
 app.set("view engine", "mustache");
 app.set("views", "./src/views");
-
-// Logger
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-})
 
 let games = [
     { id: 1, title: "Super Smash Bros", platform: "Nintendo 64", year: 1999},
@@ -87,7 +96,7 @@ app.delete("/api/games/:id", (req, res) => {
     }
 
     games.splice(index, 1);
-    res.status(204).send();
+    res.redirect("/library");
 })
 
 // Not Found Handler
