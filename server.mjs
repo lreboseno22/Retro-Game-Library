@@ -49,6 +49,11 @@ app.get("/add-game", (req, res) => {
 // POST a new game
 app.post("/api/games", (req, res) => {
     const { title, platform, year } = req.body;
+
+    if(!title || !platform || !year){
+        return res.status(400).send("All fields are required.");
+    }
+
     const newGame = { 
         id: games[games.length - 1].id + 1,
         title,
@@ -86,6 +91,11 @@ app.put("/api/games/:id", (req, res) => {
     if(!game) return res.status(404).send("Game not Found");
 
     const { title, platform, year } = req.body;
+
+    if(!title && !platform && !year){
+        return res.status(400).send("At least one field must be provided to update.");
+    }
+
     game.title = title ?? game.title;
     game.platform = platform ?? game.platform;
     game.year = year ?? game.year;
@@ -116,6 +126,7 @@ app.use(function(err, req, res, next){
     res.status(500).send(err.message);
 })
 
+// Start Server
 app.listen(PORT, () => {
     console.log(`Server Listening at http://localhost: ${PORT}`);
 })
