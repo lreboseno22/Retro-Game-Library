@@ -2,7 +2,8 @@ import {
     getGames,
     addGame,
     findGameById,
-    updateGame as updateGameModel
+    updateGame as updateGameModel,
+    deleteGame as deleteGameModel
 } from "../models/gameModel.mjs"
 
 
@@ -46,14 +47,8 @@ export const updateGame = (req, res) => {
 }
 
 export const deleteGame = (req, res) => {
-    const id = req.params.id;
-    
-    const index = games.findIndex(g => g.id == id);
-    if(index === -1){
-        return res.status(404).send("Game not Found");
-    }
-
-    games.splice(index, 1);
+    const deleted = deleteGameModel(req.params.id);
+    if(!deleted) return res.status(404).send("Game not Found");
     res.redirect("/library");
 }
 

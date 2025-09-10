@@ -18,3 +18,10 @@ export const updateGame = (id, updatedFields) => {
 
     return game;
 }
+export const deleteGame = (id) => {
+    const index = games.findIndex(g => g.id == id);
+    if(index === -1) return null;
+
+    games.splice(index, 1);
+    return true;
+}
