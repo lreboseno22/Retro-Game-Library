@@ -2,24 +2,33 @@
 <html>
 <head>
     <title>Retro Game Library</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
+    <div class="container">
     <h1>Retro Game Library</h1>
 
     <ul>
         {{#games}}
         <li>
-            {{title}} {{platform}}, {{year}}
+            <span>{{title}} {{platform}}, {{year}}</span>
+            <span>
+            <form action="/edit-game/{{id}}" method"GET" style="display:inline;">
+                <button type="submit">Edit</button>
+            </form>
+            </span>
+            <span>
             <form action="/api/games/{{id}}" method="POST" style="display:inline;">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit">Delete</button>
             </form>
-            <a href="/edit-game/{{id}}">Edit</a>
+            </span>
         </li>
         {{/games}}
     </ul>
 
     <a href="/add-game"> Add a new game </a>
+    </div>
 </body>
 </html>

@@ -8,6 +8,10 @@ const PORT = 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Styling
+app.use(express.static("public"));
+
 // TESTING DELETE WITH THE MUSTACHE TEMPLATE
 app.use(methodOverride("_method"));
 
