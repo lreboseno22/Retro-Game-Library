@@ -1,7 +1,8 @@
 import {
     getGames,
     addGame,
-    findGameById
+    findGameById,
+    updateGame as updateGameModel
 } from "../models/gameModel.mjs"
 
 
@@ -33,27 +34,14 @@ export const createGame = (req, res) => {
 }
 
 export const editGameForm = (req, res) => {
-    const game = games.find(g => g.id == req.params.id);
-
+    const game = findGameById(req.params.id);
     if(!game) return res.status(404).send("Game not Found");
     res.render("editGame", { game });
 }
 
 export const updateGame = (req, res) => {
-    const game = games.find(g => g.id == req.params.id);
-
-    if(!game) return res.status(404).send("Game not Found");
-
-    const { title, platform, year } = req.body;
-
-    if(!title && !platform && !year){
-        return res.status(400).send("At least one field must be provided to update.");
-    }
-
-    game.title = title ?? game.title;
-    game.platform = platform ?? game.platform;
-    game.year = year ?? game.year;
-
+    const updated = updateGameModel(req.params.id, req.body);
+    if(!updated) return res.status(404).send("Game not Found");
     res.redirect("/library");
 }
 
@@ -70,7 +58,7 @@ export const deleteGame = (req, res) => {
 }
 
 // JSON
-export const getAllGames = (req, res) => res.json(games);
+export const getAllGames = (req, res) => res.json(getGames());
 export const getGameById = (req, res) => {
     const game = findGameById(req.params.id);
 
