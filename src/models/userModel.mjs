@@ -11,3 +11,15 @@ export const findUserById = (id) => users.find(u => u.id == id);
 
 // POST user
 export const addUser = (user) => users.push(user);
+
+// PUT (UPDATE) user
+export const updateUser = (id, updatedFields) => {
+    const user = users.find(u => u.id == id);
+    if(!user) return null;
+
+    const { username, email } = updatedFields;
+    user.username = username ?? user.username;
+    user.email = email ?? user.email;
+
+    return user;
+}

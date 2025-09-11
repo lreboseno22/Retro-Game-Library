@@ -2,6 +2,7 @@ import {
     getUsers,
     findUserById,
     addUser,
+    updateUser as updateUserModel
 } from "../models/userModel.mjs";
 
 export const getAllUsers = (req, res) => {
@@ -28,4 +29,10 @@ export const createUser = (req, res) => {
 
     addUser(newUser);
     res.status(201).json(newUser);
+}
+
+export const updateUser = (req, res) => {
+    const updated = updateUserModel(req.params.id, req.body);
+    if(!updated) return res.status(400).send("User not Found");
+    res.json(updated);
 }
