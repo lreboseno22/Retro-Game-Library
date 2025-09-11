@@ -3,6 +3,7 @@ import mustacheExpress from "mustache-express";
 import methodOverride from "method-override";
 import gameRoutes from "./routes/gameRoutes.mjs";
 import userRoutes from "./routes/userRoutes.mjs";
+import reviewRoutes from "./routes/reviewRoutes.mjs";
 import { logger } from "./middleware/logger.mjs"
 
 const app = express();
@@ -31,6 +32,7 @@ app.set("views", "./src/views");
 // Routes
 app.use("/", gameRoutes);
 app.use("/", userRoutes);
+app.use("/", reviewRoutes);
 
 // 404 Handler
 app.use((req, res) => {
