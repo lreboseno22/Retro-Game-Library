@@ -5,3 +5,15 @@ let reviews = [
 
 export const getReviews = () => reviews;
 export const findReviewById = (id) => reviews.find(r => r.id == id);
+export const addReview = (review) => reviews.push(review);
+
+export const updateReview = (id, updatedFields) => {
+    const review = reviews.find(r => r.id == id);
+    if(!review) return null;
+
+    const { text, rating } = updatedFields;
+    review.text = text ?? review.text;
+    review.rating = rating ?? review.rating;
+
+    return review;
+}
