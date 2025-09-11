@@ -2,7 +2,8 @@ import {
     getUsers,
     findUserById,
     addUser,
-    updateUser as updateUserModel
+    updateUser as updateUserModel,
+    deleteUser as deleteUserModel
 } from "../models/userModel.mjs";
 
 export const getAllUsers = (req, res) => {
@@ -35,4 +36,10 @@ export const updateUser = (req, res) => {
     const updated = updateUserModel(req.params.id, req.body);
     if(!updated) return res.status(400).send("User not Found");
     res.json(updated);
+}
+
+export const deleteUser = (req, res) => {
+    const deleted = deleteUserModel(req.params.id);
+    if(!deleted) return res.status(404).send("User not Found");
+    res.json({ message: "User deleted" });
 }

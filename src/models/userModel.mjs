@@ -23,3 +23,10 @@ export const updateUser = (id, updatedFields) => {
 
     return user;
 }
+
+// DELETE user 
+export const deleteUser = (id) => {
+    const index = users.findIndex(u => u.id == id);
+    if(!index === -1) return null;
+    return users.splice(index, 1);
+}
