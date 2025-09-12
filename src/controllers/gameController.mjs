@@ -8,7 +8,18 @@ import {
 
 
 export const getLibrary = (req, res) => {
-    res.render("index", { games: getGames() });
+    let games = getGames();
+    const { platform, year } = req.query;
+
+    if(platform){
+        games = games.filter(g => g.platform.toLowerCase().includes([platform.toLowerCase()]));
+    }
+    if(year){
+        games = games.filter(g => g.year == year);
+    }
+    
+
+    res.render("index", { games });
 }
 
 export const addGameForm = (req, res) => {

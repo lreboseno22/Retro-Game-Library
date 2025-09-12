@@ -9,6 +9,12 @@
     <div class="container">
     <h1>Retro Game Library</h1>
 
+    <form method="GET" action="/library">
+        <input type="text" name="platform" placeholder="Search by platform">
+        <input type="number" name="year" placeholder="Search by year">
+        <button type="submit">Filter</button>
+    </form>
+
     <ul>
         {{#games}}
         <li>
