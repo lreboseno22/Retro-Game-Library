@@ -9,32 +9,37 @@
     <div class="container">
     <h1>Retro Game Library</h1>
 
-    <form method="GET" action="/library">
+    <form method="GET" action="/library" class="filter-form">
         <input type="text" name="platform" placeholder="Search by platform">
         <input type="number" name="year" placeholder="Search by year">
         <button type="submit">Filter</button>
     </form>
-
-    <ul>
+        <div class="card-grid">
         {{#games}}
-        <li>
-            <span>{{title}} {{platform}}, {{year}}</span>
-            <span>
+        <div class="card">
+            <img src="/images/png-clipart-pac-man-pixel-art-retro-game-text-rectangle-thumbnail-removebg-preview.png" alt="Game Cover" class="card-img">
+            <div class="card-content">
+            <h3>{{title}}</h3>
+            <p>{{platform}} | {{year}}</p>
+            </div>
+            <div class="card-buttons">
             <form action="/edit-game/{{id}}" method"GET" style="display:inline;">
-                <button type="submit">Edit</button>
+                <button type="submit" class="btn-edit">Edit</button>
             </form>
-            </span>
-            <span>
             <form action="/api/games/{{id}}" method="POST" style="display:inline;">
                 <input type="hidden" name="_method" value="DELETE">
-                <button type="submit">Delete</button>
+                <button type="submit"class="btn-delete">Delete</button>
             </form>
-            </span>
-        </li>
+            </div>
+        </div>
         {{/games}}
-    </ul>
+        </div>
 
-    <a href="/add-game"> Add a new game </a>
+    <div class="add-game=container">
+        <a href="/add-game"> 
+            <button type="button" class="btn-add"> Add a new game </button>
+        </a>
+    </div>
     </div>
 </body>
 </html>
