@@ -8,7 +8,7 @@ import {
 
 
 export const getLibrary = (req, res) => {
-    res.render("index", { games: getGames });
+    res.render("index", { games: getGames() });
 }
 
 export const addGameForm = (req, res) => {
@@ -53,7 +53,19 @@ export const deleteGame = (req, res) => {
 }
 
 // JSON
-export const getAllGames = (req, res) => res.json(getGames());
+export const getAllGames = (req, res) => {
+    let games = getGames();
+    const { platform, year } = req.query;
+    
+    if(platform){
+        games = games.filter(g => g.platform.toLowerCase().includes([platform.toLowerCase()]));
+    }
+    if(year){
+        games = games.filter(g => g.year == year);
+    }
+    
+    res.json(games);
+}
 export const getGameById = (req, res) => {
     const game = findGameById(req.params.id);
 
