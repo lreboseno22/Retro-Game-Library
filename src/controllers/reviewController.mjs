@@ -2,7 +2,8 @@ import {
     getReviews,
     findReviewById,
     addReview,
-    updateReview as updateReviewModel
+    updateReview as updateReviewModel,
+    deleteReview as deleteReviewModel
 } from "../models/reviewModel.mjs";
 
 export const getAllReviews = (req, res) => res.json(getReviews());
@@ -36,4 +37,10 @@ export const updateReview = (req, res) => {
     const updated = updateReviewModel(req.params.id, req.body);
     if(!updated) return res.status(404).send("Review not Found");
     res.json(updated);
+}
+
+export const deleteReview = (req, res) => {
+    const deleted = deleteReviewModel(req.params.id);
+    if(!deleted) return res.status(404).send("Review not Found");
+    res.json({ message: "Review deleted" });
 }

@@ -17,3 +17,9 @@ export const updateReview = (id, updatedFields) => {
 
     return review;
 }
+
+export const deleteReview = (id) => {
+    const index = reviews.findIndex(r => r.id == id);
+    if(index === -1) return null;
+    return reviews.splice(index, 1);
+}
